@@ -1,27 +1,27 @@
+const catchAsyncErrors = require("../middlewares/catchAsyncErrors");
 const productModel = require("../models/productModel");
 const ProductModel = require("../models/productModel");
 const ErrorHandler = require("../utils/errorHandler");
 
 //Create Product --Admin
-exports.createProduct = async (req, res) => {
+exports.createProduct = catchAsyncErrors(async (req, res) => {
   const product = await ProductModel.create(req.body);
   res.status(201).json({
     success: true,
     product,
   });
-};
+});
 
 // Get All Products
-exports.getAllProducts = async (req, res) => {
+exports.getAllProducts = catchAsyncErrors(async (req, res) => {
   const product = await ProductModel.find({});
   res.status(201).json({
     success: true,
     product,
   });
-};
-
+});
 // Update Product
-exports.updateProducts = async (req, res, next) => {
+exports.updateProducts = catchAsyncErrors(async (req, res, next) => {
   let product = await ProductModel.findById(req.params.id);
   if (!product) {
     return next(new ErrorHandler("Product Not Found", 404));
@@ -34,10 +34,10 @@ exports.updateProducts = async (req, res, next) => {
     success: true,
     product,
   });
-};
+});
 
 // Delete Products
-exports.deleteProducts = async (req, res, next) => {
+exports.deleteProducts = catchAsyncErrors(async (req, res, next) => {
   const product = await ProductModel.findById(req.params.id);
   if (!product) {
     return next(new ErrorHandler("Product Not Found", 404));
@@ -47,10 +47,10 @@ exports.deleteProducts = async (req, res, next) => {
     success: true,
     product: "Product Delete Successfully",
   });
-};
+});
 
-// get signal Products
-exports.getProductDetails = async (req, res, next) => {
+// Get Signal Products
+exports.getProductDetails = catchAsyncErrors(async (req, res, next) => {
   const product = await ProductModel.findById(req.params.id);
   if (!product) {
     return next(new ErrorHandler("Product Not Found", 404));
@@ -59,4 +59,4 @@ exports.getProductDetails = async (req, res, next) => {
     success: true,
     product,
   });
-};
+});
