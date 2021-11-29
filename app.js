@@ -1,8 +1,16 @@
 const express = require("express");
-const errorMiddleware = require("./middlewares/errorMiddleware");
 const app = express();
+const cookieParser = require("cookie-parser");
+const bodyParser = require("body-parser");
+const fileUpload = require("express-fileupload");
+const path = require("path");
 
+const errorMiddleware = require("./middlewares/errorMiddleware");
 // middlewares
+app.use(express.json());
+app.use(cookieParser());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(fileUpload());
 app.use(express.json());
 // routes imports
 const product = require("./routes/productrRoute");
